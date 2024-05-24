@@ -85,7 +85,7 @@
       system = "x86_64-darwin";
       modules = [
         ./machines/lorien-macbookpro-2017/configuration.nix
-	      home-manager.darwinModules.home-manager
+        home-manager.darwinModules.home-manager
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
