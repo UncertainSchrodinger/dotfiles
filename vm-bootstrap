@@ -1,0 +1,20 @@
+#!/usr/bin/env nix-shell
+#!nix-shell -i bash -p git
+# vim: filetype=bash
+# TODO(tatu): neovim LSP thinks this is nix, how do I override it
+
+# This script is used to bootstrap a vm with my configuration. It'll partition
+# disks and install latest configuration. Just curl pipe this to sudo execute
+# and avoid eye contact with the security team.
+
+set -e
+
+git clone https://github.com/UncertainSchrodinger/dotfiles.git /tmp/dotfiles
+
+(
+  cd /tmp/dotfiles
+  git checkout virtualbox-config
+
+  # create partitions
+  nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko ./machines/sheridan-virtualbox/disk-config.nix
+)
