@@ -64,6 +64,23 @@
       ];
     };
 
+    nixosConfigurations.delenn = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit self; inherit inputs; };
+      modules = [
+        ./machines/delenn-wsl/configuration.nix
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+
+          home-manager.users.kuglimon = { ... } :{
+            imports = [./machines/delenn-wsl/home.nix];
+          };
+        }
+      ];
+    };
+
     nixosConfigurations.watermedia = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit self; inherit inputs; };
